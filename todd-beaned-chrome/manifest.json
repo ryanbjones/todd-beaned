@@ -1,0 +1,30 @@
+{
+  "manifest_version": 2,
+
+  "name": "Todd-Beaned",
+  "description": "This extension demonstrates Ryan's browser action with FB-photos."
+,
+  "version": "1.0",
+
+  "permissions": [
+    "https://secure.flickr.com/"
+  ],
+  "browser_action": {
+    "default_icon": "icon.png",
+    "default_popup": "popup.html"
+  }
+  // "content_scripts": [
+  //   {
+  //   "all_frames": false,
+  //   "matches": ["<all_urls>"],
+  //   "exclude_matches": [],
+  //     "js": [
+  //       "js/lib/jquery.js"
+  //     ],
+
+  //     "css": [
+  //       "js/content/page.css"
+  //     ]
+  //   }
+  // ]
+}

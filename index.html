@@ -22,20 +22,7 @@
       accessToken = response.authResponse.accessToken;
       userID = response.authResponse.userID;
       testAPI();
-      FB.api(
-      "me/photos",//?fields=tagged{full_picture},picture",
-      function (response) {
-        if (response && !response.error) {
-          console.log(response);
-          new_response = response;
-          for (var i = 0; i < new_response.data.length; i++) {
-            var last_subimage = new_response.data[i].images.length-1;
-
-            var link = new_response.data[i].images[last_subimage].source;
-            var img = "<img src='"+link+"'>";
-            $("body").append(img);
-          }
-        }
+      $(document).trigger("fbLoaded");
       });
     } else if (response.status === 'not_authorized') {
       // The person is logged into Facebook, but not your app.
@@ -107,10 +94,29 @@
     });
   }
 
-  // $(document).on("loggedIn",function() {
-  //   // Get my photos from FB
+  $(document).on("fbLoaded",function() {
+    // Get my photos from FB
+    FB.api(
+    "me/photos",//?fields=tagged{full_picture},picture",
+    function (response) {
+      if (response && !response.error) {
+        addImagesToBody(response);
+      }
+  });
 
-  // });
+  var getSmallestImageSrc = function(pictureObject) {
+    var lastIndex = pictureObject.length-1;
+    return pictureObject.images[lastIndex].source;
+  }
+
+  var addImagesToBody = function(response) {
+    for (var i = 0; i < response.data.length; i++) {
+      var src = getSmallestImageSrc(response.data[i])
+
+      var img = "<img src='"+src+"'>";
+      $("body").append(img);
+    }
+  }
 </script>
 
 <!--
